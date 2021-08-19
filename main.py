@@ -6,8 +6,6 @@ from Degree import Degree
 from Scale import Scale
 from Scale_Options import scale_options_dict
 
-search_key = input("Input key: ")
-
 notes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 degree_symbols = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
 
@@ -44,7 +42,7 @@ def organize_list(key):
                 new_list.append(notes[x])
             for j in range(0, index):
                 new_list.append(notes[j])
-            return new_list
+    return new_list
 
 
 def degree_builder():
@@ -66,12 +64,34 @@ def degree_builder():
 
 degrees = degree_builder()
 
+
 # mps = scale_options_dict.get('Minor Pentatonic Scale')
-# print(scale_options_dict.keys())
+def list_scales():
+    """lists all available scales in dict
+    TODO: Fix slicing and spliting so that quotations dont show up"""
+    string_split = scale_options_dict.keys().__str__()
+    txt = string_split.split("[")
+    txt = txt[1].split("]")
+    txt = txt[0].split(", ")
+    for txts in txt:
+        print(f"\t{txt.index(txts) + 1}. {txts}")
+    return txt
+
+
 # print(mps.keys())
 # print(mps.get('scale_degrees'))
 
-scale_name = input("Choose a scale")
+def main_menu():
+    """do the menu thing again"""
+    print(f"Welcome to the Musical Scale Machine!\n\tPlease enter a tonic and choose from "
+          f"one of the following scales...")
+    scales = list_scales()
+    tonic = input("Tonic (eg. A, Eb, Gb, B): ")
+    choice = int(input("Scale (eg. 1, 2, 3...): "))
+    menu_selection = {'tonic': tonic,
+                      'scale_name': scales[choice - 1]}
+    print(menu_selection)
+    return menu_selection
 
 
 def build_scale(scale_pattern, scale_degrees, scale_name):
@@ -99,7 +119,9 @@ def build_patterns(scale_name, note_list):
     return build_scale(interval_pattern_list, degrees_list, scale_name)
 
 
-scale = build_patterns(scale_name, organize_list(search_key))
+selection = main_menu()
+
+scale = build_patterns(selection.get("scale_name"), organize_list(selection.get("tonic")))
 print(scale.name)
 for i in range(0, len(scale.degrees)):  # learn how to use enumerate
     print(f"{scale.degrees[i].symbol}: {scale.degrees[i].note.name}")
