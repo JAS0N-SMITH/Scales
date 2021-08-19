@@ -65,40 +65,83 @@ def degree_builder():
 
 degrees = degree_builder()
 
+scale_options_dict = {
+    'Major Scale': {
+        'scale_degrees': 7,
+        'interval_pattern': [0, 2, 4, 5, 7, 9, 11],
+    },
+    'Natural Minor Scale': {
+        'scale_degrees': 7,
+        'interval_pattern': [0, 2, 3, 5, 7, 8, 10],
+    },
+    'Major Pentatonic Scale': {
+        'scale_degrees': 5,
+        'interval_pattern': [0, 2, 4, 7, 9],
+    },
+    'Minor Pentatonic Scale': {
+        'scale_degrees': 5,
+        'interval_pattern': [0, 3, 5, 7, 10],
+    },
+    'Blues Scale': {
+        'scale_degrees': 6,
+        'interval_pattern': [0, 3, 5, 6, 7, 10],
+    },
+    'Mixolydian Mode': {
+        'scale_degrees': 7,
+        'interval_pattern': [0, 2, 4, 5, 7, 9, 10],
+    },
+    'Lydian Mode': {
+        'scale_degrees': 7,
+        'interval_pattern': [0, 2, 4, 6, 7, 9, 11],
+    },
+    'Locrian Mode': {
+        'scale_degrees': 7,
+        'interval_pattern': [0, 1, 3, 5, 6, 8, 10],
+    },
+    'Dorian Mode': {
+        'scale_degrees': 7,
+        'interval_pattern': [0, 2, 3, 5, 7, 9, 10],
+    },
+    'Phrygian Mode': {
+        'scale_degrees': 7,
+        'interval_pattern': [0, 1, 3, 5, 7, 8, 10],
+    },
+    'Phrygian Dominant Scale': {
+        'scale_degrees': 7,
+        'interval_pattern': [0, 1, 4, 5, 7, 8, 10],
+    }
+}
 
-# MAKE MAJOR SCALE PATTERN
-def major_scale(note_list, degree_list):
-    """assigns correct notes to scale degrees"""
-    major_scale_degrees = [degree_list[0], degree_list[1], degree_list[2], degree_list[3],
-                           degree_list[4], degree_list[5], degree_list[6]]
-    major_scale_pattern = [note_list[0], note_list[2], note_list[4], note_list[5],
-                           note_list[7], note_list[9], note_list[11]]
-    for k in range(0, len(major_scale_pattern)):
-        major_scale_degrees[k].assign_note(major_scale_pattern[k])
-    return Scale(f"{major_scale_degrees[0].note.name} Major Scale",
-                 major_scale_degrees[0].note,
-                 major_scale_degrees)
+# mps = scale_options_dict.get('Minor Pentatonic Scale')
+# print(scale_options_dict.keys())
+# print(mps.keys())
+# print(mps.get('scale_degrees'))
+
+scale_name = input("Choose a scale")
 
 
-def minor_scale(note_list, degree_list):
-    """assigns correct notes to scale degrees for minor scale"""
-    minor_scale_degrees = [degree_list[0], degree_list[1], degree_list[2], degree_list[3],
-                           degree_list[4], degree_list[5], degree_list[6]]
-    minor_scale_pattern = [note_list[0], note_list[2], note_list[3], note_list[5],
-                           note_list[7], note_list[8], note_list[10]]
-    for k in range(0, len(minor_scale_pattern)):
-        minor_scale_degrees[k].assign_note(minor_scale_pattern[k])
-    return Scale(f"{minor_scale_degrees[0].note.name} Minor Scale",
-                 minor_scale_degrees[0].note,
-                 minor_scale_degrees)
+def build_scale(scale_pattern, scale_degrees, scale_name):
+    """populates scale object with notes from note list and degree requirements"""
+    for k in range(0, len(scale_pattern)):
+        scale_degrees[k].assign_note(scale_pattern[k])
+    return Scale(f"{scale_degrees[0].note.name} {scale_name}",
+                 scale_degrees[0].note,
+                 scale_degrees)
 
 
-major_scale = major_scale(organize_list(search_key), degrees)
-print(major_scale.name)
-for i in range(0, len(major_scale.degrees)):
-    print(f"{major_scale.degrees[i].symbol}: {major_scale.degrees[i].note.name}")
+def build_patterns(scale_name, note_list):
+    new_scale = scale_options_dict.get(scale_name)
+    degrees_list = []
+    for k in range(0, new_scale.get('scale_degrees')):
+        degrees_list.append(degrees[k])
+    interval_pattern = new_scale.get('interval_pattern')
+    interval_pattern_list = []
+    for interval in interval_pattern:
+        interval_pattern_list.append(note_list[interval])
+    return build_scale(interval_pattern_list, degrees_list, scale_name)
 
-minor_scale = minor_scale(organize_list(search_key), degrees)
-print(minor_scale.name)
-for i in range(0, len(minor_scale.degrees)):
-    print(f"{minor_scale.degrees[i].symbol}: {minor_scale.degrees[i].note.name}")
+
+scale = build_patterns(scale_name, organize_list(search_key))
+print(scale.name)
+for i in range(0, len(scale.degrees)):
+    print(f"{scale.degrees[i].symbol}: {scale.degrees[i].note.name}")
