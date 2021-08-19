@@ -13,7 +13,7 @@ degree_symbols = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', '
 
 
 def note_builder(note_list):
-    """creates all of the note objects"""
+    """creates all of the note objects and returns a list of notes """
     C = Note(note_list[0], note_list[0])
     Db = Note(note_list[1], note_list[1])
     D = Note(note_list[2], note_list[2])
@@ -40,7 +40,7 @@ def organize_list(key):
             length = len(notes)
             index = notes.index(note)
             new_list = [note]
-            for x in range(index + 1, length):
+            for x in range(index + 1, length):  # enumerate?
                 new_list.append(notes[x])
             for j in range(0, index):
                 new_list.append(notes[j])
@@ -66,7 +66,6 @@ def degree_builder():
 
 degrees = degree_builder()
 
-
 # mps = scale_options_dict.get('Minor Pentatonic Scale')
 # print(scale_options_dict.keys())
 # print(mps.keys())
@@ -76,7 +75,8 @@ scale_name = input("Choose a scale")
 
 
 def build_scale(scale_pattern, scale_degrees, scale_name):
-    """populates scale object with notes from note list and degree requirements"""
+    """populates scale object with notes from note list and degree requirements
+    TODO:[consider-using-enumerate] & consider combining with build_patterns()"""
     for k in range(0, len(scale_pattern)):
         scale_degrees[k].assign_note(scale_pattern[k])
     return Scale(f"{scale_degrees[0].note.name} {scale_name}",
@@ -85,6 +85,9 @@ def build_scale(scale_pattern, scale_degrees, scale_name):
 
 
 def build_patterns(scale_name, note_list):
+    """uses the scale name input and note list to arrange the notes and degrees in accordance
+    with the pattern stored in the scale_options_dict dictionary
+    TODO: Clean up"""
     new_scale = scale_options_dict.get(scale_name)
     degrees_list = []
     for k in range(0, new_scale.get('scale_degrees')):
@@ -98,5 +101,5 @@ def build_patterns(scale_name, note_list):
 
 scale = build_patterns(scale_name, organize_list(search_key))
 print(scale.name)
-for i in range(0, len(scale.degrees)):
+for i in range(0, len(scale.degrees)):  # learn how to use enumerate
     print(f"{scale.degrees[i].symbol}: {scale.degrees[i].note.name}")
