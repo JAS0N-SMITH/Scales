@@ -86,7 +86,7 @@ def main_menu():
     print(f"Welcome to the Musical Scale Machine!\n\tPlease enter a tonic and choose from "
           f"one of the following scales...")
     scales = list_scales()
-    input_tonic = input("Tonic (eg. A, Eb, Gb, B): ")
+    input_tonic = input("Tonic (eg. A, Eb, Gb, B): ").title()
     choice = int(input("Scale (eg. 1, 2, 3...): "))
     menu_selection = {'tonic': input_tonic,
                       'scale_name': scales[choice - 1]}
