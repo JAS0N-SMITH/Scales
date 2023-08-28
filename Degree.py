@@ -10,6 +10,7 @@ class Degree:
     def __init__(self, name, symbol):
         self.name = name
         self.symbol = symbol
+        self.note = None
 
     def assign_note(self, note):
         """assigns a note to the degree"""
