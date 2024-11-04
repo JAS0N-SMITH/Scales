@@ -42,5 +42,5 @@ scale_options_dict = {
     'Phrygian Dominant Scale': {
         'scale_degrees': 7,
         'interval_pattern': [0, 1, 4, 5, 7, 8, 10],
-    }
+    },
 }
