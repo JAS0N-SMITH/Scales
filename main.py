@@ -1,12 +1,12 @@
 """
 MAIN
 """
-from Note import Note
-from Degree import Degree
-from Scale import Scale
-from Scale_Options import scale_options_dict
-from Chord import Chord
-from Chord_Progression import Chord_Progression
+from models.note import Note
+from models.degree import Degree
+from models.scale import Scale
+# from models.chord import Chord
+from config.scale_options import scale_options_dict
+from models.progression import ChordProgression
 
 notes = ['C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B']
 degree_symbols = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII']
@@ -116,7 +116,7 @@ def main_menu():
 
 def display_chord_progressions(scale):
     """Displays multiple chord progressions for the given scale"""
-    chord_progression = Chord_Progression(scale)
+    chord_progression = ChordProgression(scale)
     progression_patterns = chord_progression.get_progression_patterns()
     print(f"Chord Progressions for {scale.name}:")
     for i, pattern in enumerate(progression_patterns):
