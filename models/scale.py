@@ -2,7 +2,7 @@
 THE SCALE FILE
 """
 
-from Chord import Chord
+from models.chord import Chord
 
 class Scale:
     def __init__(self, name, key, degrees):

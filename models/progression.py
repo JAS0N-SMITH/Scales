@@ -1,7 +1,7 @@
-# Chord_Progression.py
-from Chord import Chord
+# progression.py
+from models.chord import Chord
 
-class Chord_Progression:
+class ChordProgression:
     def __init__(self, scale):
         self.scale = scale
 
