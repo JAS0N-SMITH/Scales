@@ -1,9 +1,20 @@
+"""Scale Factory"""
+
 from models.scale import Scale
 from models.note import Note
 from models.degree import Degree
 from config.scale_options import scale_options_dict
 
 class ScaleFactory:
+    """
+    A factory class for creating musical scales.
+    Methods
+    -------
+    create_scale(name: str, key: Note, degrees: list[Degree]) -> Scale
+        Create a scale object with the given name, key, and degrees.
+    create_from_pattern(scale_name: str, notes: list[Note], degrees: list[Degree]) -> Scale
+        Create a scale from a pattern defined in the scale_options_dict.
+    """
     @staticmethod
     def create_scale(name: str, key: Note, degrees: list[Degree]) -> Scale:
         """Create a scale object"""
