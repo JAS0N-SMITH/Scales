@@ -1,3 +1,4 @@
+'''scale options module'''
 scale_options_dict = {
     'Major Scale': {
         'scale_degrees': 7,

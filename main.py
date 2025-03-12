@@ -8,6 +8,7 @@ from factories.degree_factory import DegreeFactory
 from factories.scale_factory import ScaleFactory
 from models.progression import ChordProgression
 from models.scale import Scale
+from config.scale_options import scale_options_dict
 
 # initialize notes and degrees
 notes = NoteFactory.create_chromatic_scale()
@@ -38,9 +39,7 @@ def list_scales() -> List[str]:
     Returns:
         List of scale names
     """
-    from config.scale_options import scale_options_dict
     scales = list(scale_options_dict.keys())
-    
     for i, scale in enumerate(scales, 1):
         print(f"\t{i}. {scale}")
     return scales
@@ -59,10 +58,8 @@ def main_menu() -> Dict[str, str]:
         scales = list_scales()
         input_tonic = input("Tonic (eg. A, Eb, Gb, B): ").title()
         choice = int(input("Scale (eg. 1, 2, 3...): "))
-        
         if not 1 <= choice <= len(scales):
             raise ValueError(f"Invalid scale selection: {choice}")
-            
         return {
             'tonic': input_tonic,
             'scale_name': scales[choice - 1]
@@ -100,12 +97,10 @@ def main() -> None:
     try:
         selection = main_menu()
         scale_name = selection['scale_name']
-        tonic = selection['tonic']
-        
+        tonic = selection['tonic']        
         # Create scale using factories
         note_list = organize_list(tonic)
-        scale = ScaleFactory.create_from_pattern(scale_name, note_list, degrees)
-        
+        scale = ScaleFactory.create_from_pattern(scale_name, note_list, degrees)        
         # Display results
         display_scale(scale)
         display_chord_progressions(scale)
@@ -116,5 +111,5 @@ def main() -> None:
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         
-if __name__ == "__main__": 
+if __name__ == "__main__":
     main()
